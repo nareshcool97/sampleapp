@@ -69,6 +69,9 @@ describe User do
 
     it { should_not be_valid }
   end
+  
+  it { should respond_to(:remember_token) }
+
   it { should respond_to(:authenticate) }
   describe "when password is not present" do
   before { @user.password = @user.password_confirmation = " " }
@@ -103,5 +106,8 @@ describe "with a password that's too short" do
       specify { user_for_invalid_password.should be_false }
     end
   end
-
+  describe "remember token" do
+    before { @user.save }
+    its(:remember_token) { should_not be_blank }
+  end
 end
